@@ -1,0 +1,204 @@
+映射	'192.168.1.5\home' 上的 czf 123
+
+以后fota单独放
+一定要先改版本号
+发邮件一定要检查清楚
+上传svn一定要仔细
+
+dos命令删除非空文件夹 （比如F盘下7731文件夹）：
+	1、F：
+	2、del 7731/s/q
+
+cmd进：\\192.168.1.5
+
+查看当前在线人数 ：top
+
+系统进程:explorer.exe
+
+编译环境切换方法：
+一）：
+1.进入系统之后先执行 java -version 确认编环境
+2.如果在java7，要切换到java6
+3.执行 su root 切换到root账户 密码是sunvov
+4.执行cp /etc/profile-jdk7 /etc/profile然后在执行update-alternatives --config java根据提示选择
+5.切换完成之后再切换回自己的账户
+
+
+6.如果在java6，要切换到java7
+7.执行 su root 切换到root账户 密码是sunvov
+8.执行cp /etc/profile-jdk6 /etc/profile然后在执行update-alternatives --config java根据提示选择
+9.切换完成之后再切换回自己的账户
+
+
+二）：
+如果要编译4.4的版本，可以source ~/java6,就可以了，如果要编译5.1的版本，可以可以source ~/java7切换。（新开的ssh环境始终是1.7的）
+
+
+
+
+
+一:MTK6582:
+1.d818项目编译eng/userdebug版本：
+		./mk d958 n 
+
+2.d818项目编译usr版本：
+		./mk -o=TARGET_BUILD_VARIANT=user d958 n
+		重编：
+		./mk -o=TARGET_BUILD_VARIANT=user d958 r
+
+3. 编译部分
+		./mk d818 mm frameworks/base/core/res
+		这里一般的，res目录下有android.mk
+
+读取camera info
+adb shell cat /proc/sunvov_cameraInfo
+
+单编camera模块
+./mk -t project r dr libcam.paramsmgr
+
+./mk d958 snod
+
+./mk d958 r
+
+改变内存后通过
+    ./mk d958 n ptgen
+    ./mk d958 n lk pl
+    ./mk d958 snod
+    ./mk d958 r          命令重新生成system.img
+
+编译电池模块
+    ./mk -o=TARGET_BUILD_VARIANT=user d958 n lk k bootimage
+    ./mk -o=TARGET_BUILD_VARIANT=user d958 r
+
+
+版本号：Y:\D958_HWD\X156\HOTWAV\USER_8363_D958_HWD_QHD_X156_HOTWAV\mediatek\config\d958\ProjectConfig.mk
+
+
+
+1.拖代码
+svn export http://192.168.1.233/svn/sprd7731/trunk/MocorDroid5.1_3.10_Tshark_15a_W15.32.3 Debug_HWF_1012_S7313_FWVGA__ALS_MIZU_5.1_B1 --force
+
+svn export http://192.168.1.233/svn/sprd7731/trunk/MocorDroid4.4_3.10_14B_tshark_W15.09.6 Debug_hwf0817 --force
+
+2.sprd编译命令
+source build/envsetup.sh
+lunch
+kheader
+make –j8 // make -j8 2>&1 |tee build.log
+
+单编模块
+mmm packages/apps/DeskClock
+
+重新编译system.img:
+make snod
+
+重新编译userdata
+make userdataimage
+
+编译OTA升级包：
+make otapackage
+
+单编bootimg
+make bootimage
+
+
+返回上一级：
+cd - 
+返回上上级：
+cd -- 
+
+复制文件：
+例如现在桌面上有一个文件（其名字是www.tar.gz）,现在要把这个文件复制到/usr/local目录下。
+cp -r www_tar.gz /usr/local
+
+删除：
+rm -rf 文件夹名称
+
+搜索：
+grep "showErrorInfo" packages/apps/FMPlayer -rn
+
+grep -rnws "存储卡已移除" packages/apps/FMPlayer/
+
+4.adb 命令
+adb root	--获取root权限
+adb remount	--重新连接
+
+adb push xxx.apk system/app	--把要替换的文件push进去
+
+adb reboot	--重启
+	
+adb shell 	--进入手机系统
+
+adb logcat -v time	--抓log
+
+adb install "F:\平台\S7312_HWF_MIZU_FWVGA_5.1_B1\20151015需求\Droid Info_1.0.3.apk"  --安装apk
+
+
+5.宏控位置：
+//声明
+device\sprd\scx35_s7312_fwvga\scx35_s7312_fwvgaplus_dt.mk(scx。。。。为版本)
+
+//定义
+frameworks\base\core\java\com\sprd\android\config\OptConfig.java
+MTK6.0：\frameworks\base\core\java\com\mediatek\config\OptConfig.java
+\4.4\MTK\D9581:版本号+宏控： \mediatek\config\d958\ProjectConfig.mk
+
+
+6.主mk：Z:\czf\Debug_hwf0909_Okapia7312\device\sprd\scx35_s7312_fwvga\scx35_s7312_fwvgaplus_UUI_dt.mk
+改版本号：export ADUPS_FOTA_VERSION = S7312_HWF_OKAPIA_WVGA_B25V01.01B02
+查看版本号：cat make.ini
+
+查看编译选项：...\device\sprd\scx35_s7380_wvga\vendorsetup.sh
+
+
+5.1版本号：X:\Debug_hwf0915_Okapia7312_5.1_userdebug\build\tools\buildinfo.sh
+
+
+
+替换nv：
+	打开nv编辑器(F:\平台\TM_BASE_MP_II_W15.09\NVEDITOR) --> File --> Open Project 
+	--> 找到项目的.prj文件(F:\Android Source code\7731\5.1\TM_BASE_MP_II_W15.31&&WCN_14D_W15.31.1\S7307_nvitem_W15.42_BAND1\nvitem.prj)
+	--> 然后点击Facility --> Import(找到驱动提供的nv) -->最后保存 --> 然后一路确定OK 
+	
+
+展讯平台进入工厂测试模式：*#788378#	(或*#8888#进入工厂测试模式)
+展讯平台进入工程师模式：*#*#83781#*#**(或*#*#8838#*#*进入工程模式)
+展讯平台查看版本号：*#7879#
+手写IMEI号功能 *#0623#
+
+
+展讯提BUG
+http://222.66.158.139:2008/cqweb/#
+suntel/suntel
+
+MTK On-Line: 
+https://online.mediatek.com
+Account(Email): liujiazhen@sunvov.com
+Login Password: sunvov123
+PDF File open password:5787982462
+
+展讯isupport:
+https://isupport.spreadtrum.com/iSupport/apply/login
+用户名：suntel
+密码:Suntel123
+
+
+http://fly.tasktrk.com/view_all_bug_page.php
+用户名：Frog-Eris
+密码：cyf420960
+
+
+解决“当开机动画与logo是相似图片时，开机过程中会闪一下黑屏”的问题。需要在主mk中添加“SUNVOV_LOGO_POWERANIM_AS_SAME := true”宏控
+
+通过拷贝内置apk，需要把lib库拿出来放在apk同一级目录：
+APP_PATH:= vendor/sunvov/Prebuilt_apps/Customer/
+		#Viber
+		PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*.apk,$(APP_PATH)/Viber,system/app or preloadapp/Viber)
+		PRODUCT_COPY_FILES += $(call find-copy-subdir-files,*.so,$(APP_PATH)/Viber,system/app or preloadapp/Viber/lib/arm)
+
+查找一个文件的路径： find 文件夹 -name “文件名”
+		
+
+
+
+
